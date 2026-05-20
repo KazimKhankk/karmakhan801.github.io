@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>KARMA.DEV — Web Dev & Roblox</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --cyan: #00FFE5;
+  --pink: #FF2D78;
+  --yellow: #FFE600;
+  --dark: #050A0E;
+  --glow-cyan: 0 0 8px #00FFE5, 0 0 20px rgba(0,255,229,0.3);
+  --glow-pink: 0 0 8px #FF2D78, 0 0 20px rgba(255,45,120,0.3);
+  --glow-yellow: 0 0 8px #FFE600, 0 0 20px rgba(255,230,0,0.3);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--dark);
+  color: #c8d8e0;
+  font-family: 'Rajdhani', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+.grid-bg {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,255,229,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,229,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none; z-index: 0;
+}
+.scanline {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.15;
+  animation: scan 4s linear infinite;
+  z-index: 1; pointer-events: none;
+}
+@keyframes scan { 0%{top:0} 100%{top:100vh} }
+.content { position: relative; z-index: 2; }
+nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.2rem 2rem;
+  border-bottom: 1px solid rgba(0,255,229,0.1);
+  background: rgba(5,10,14,0.9);
+  backdrop-filter: blur(10px);
+  position: sticky; top: 0; z-index: 10;
+}
+.nav-logo {
+  font-family: 'Orbitron', monospace; font-size: 18px; font-weight: 900;
+  color: var(--cyan); text-shadow: var(--glow-cyan); letter-spacing: 3px;
+}
+.nav-logo span { color: var(--pink); text-shadow: var(--glow-pink); }
+.nav-links { display: flex; gap: 1.5rem; list-style: none; }
+.nav-links a {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  color: rgba(200,216,224,0.6); text-decoration: none;
+  letter-spacing: 1px; transition: color 0.2s, text-shadow 0.2s;
+}
+.nav-links a:hover { color: var(--cyan); text-shadow: var(--glow-cyan); }
+.hero { padding: 5rem 2rem 4rem; max-width: 860px; margin: 0 auto; }
+.hero-tag {
+  font-family: 'Share Tech Mono', monospace; font-size: 12px;
+  color: var(--cyan); letter-spacing: 2px; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 8px;
+  animation: fadeUp 0.5s ease forwards;
+}
+.hero-tag::before {
+  content: ''; display: inline-block; width: 24px; height: 1px;
+  background: var(--cyan); box-shadow: var(--glow-cyan);
+}
+.blink { animation: blink 1s step-end infinite; }
+@keyframes blink { 50%{opacity:0} }
+.hero h1 {
+  font-family: 'Orbitron', monospace;
+  font-size: clamp(36px, 7vw, 64px); font-weight: 900;
+  line-height: 1.1; margin-bottom: 0.5rem; color: #fff; letter-spacing: -1px;
+  animation: fadeUp 0.5s 0.1s ease both;
+}
+.hero h1 .name { color: var(--cyan); text-shadow: var(--glow-cyan); display: block; }
+.hero h1 .dot { color: var(--pink); text-shadow: var(--glow-pink); }
+.hero-sub {
+  font-family: 'Share Tech Mono', monospace; font-size: 13px;
+  color: var(--pink); text-shadow: var(--glow-pink);
+  margin-bottom: 1.5rem; letter-spacing: 1px;
+  animation: fadeUp 0.5s 0.2s ease both;
+}
+.hero-desc {
+  font-size: 16px; font-weight: 300; color: rgba(200,216,224,0.7);
+  line-height: 1.7; max-width: 500px; margin-bottom: 2.5rem;
+  animation: fadeUp 0.5s 0.3s ease both;
+}
+.hero-btns { display: flex; gap: 12px; flex-wrap: wrap; animation: fadeUp 0.5s 0.4s ease both; }
+.btn-cyber {
+  font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 2px; padding: 12px 24px;
+  border: 1px solid var(--cyan); color: var(--cyan);
+  background: rgba(0,255,229,0.05); cursor: pointer; text-decoration: none;
+  display: inline-block;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  transition: all 0.2s;
+}
+.btn-cyber:hover { background: rgba(0,255,229,0.15); box-shadow: var(--glow-cyan); }
+.btn-cyber.pink { border-color: var(--pink); color: var(--pink); background: rgba(255,45,120,0.05); }
+.btn-cyber.pink:hover { background: rgba(255,45,120,0.15); box-shadow: var(--glow-pink); }
+.btn-cyber.yellow { border-color: var(--yellow); color: var(--yellow); background: rgba(255,230,0,0.05); }
+.btn-cyber.yellow:hover { background: rgba(255,230,0,0.15); box-shadow: var(--glow-yellow); }
+.section { padding: 3rem 2rem; max-width: 860px; margin: 0 auto; }
+.section-header { display: flex; align-items: center; gap: 16px; margin-bottom: 2rem; }
+.section-header h2 {
+  font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700;
+  color: var(--cyan); letter-spacing: 3px; text-shadow: var(--glow-cyan); white-space: nowrap;
+}
+.section-header::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(0,255,229,0.3), transparent);
+}
+.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.skill-card {
+  border: 1px solid rgba(0,255,229,0.15); padding: 16px;
+  background: rgba(0,255,229,0.02); position: relative; transition: all 0.3s;
+}
+.skill-card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%; background: var(--cyan);
+  box-shadow: var(--glow-cyan); opacity: 0; transition: opacity 0.3s;
+}
+.skill-card:hover { border-color: rgba(0,255,229,0.4); background: rgba(0,255,229,0.05); }
+.skill-card:hover::before { opacity: 1; }
+.skill-name { font-family: 'Orbitron', monospace; font-size: 11px; font-weight: 700; color: #fff; letter-spacing: 1px; margin-bottom: 6px; }
+.skill-bar-bg { height: 3px; background: rgba(255,255,255,0.08); margin-bottom: 6px; overflow: hidden; }
+.skill-bar { height: 100%; background: linear-gradient(90deg, var(--cyan), var(--pink)); box-shadow: 0 0 6px var(--cyan); animation: fillbar 1.5s ease-out forwards; }
+@keyframes fillbar { from{width:0} }
+.skill-level { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: rgba(200,216,224,0.4); }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.project-card {
+  border: 1px solid rgba(255,45,120,0.2); background: rgba(255,45,120,0.02);
+  padding: 20px; position: relative; overflow: hidden; transition: all 0.3s;
+}
+.project-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--pink), var(--cyan));
+  transform: scaleX(0); transition: transform 0.3s;
+}
+.project-card:hover { border-color: rgba(255,45,120,0.5); }
+.project-card:hover::after { transform: scaleX(1); }
+.project-tag { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: var(--pink); letter-spacing: 1px; margin-bottom: 8px; }
+.project-name { font-family: 'Orbitron', monospace; font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+.project-desc { font-size: 13px; font-weight: 300; color: rgba(200,216,224,0.6); line-height: 1.6; margin-bottom: 14px; }
+.project-link { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--cyan); text-decoration: none; letter-spacing: 1px; display: inline-flex; align-items: center; gap: 6px; transition: text-shadow 0.2s; }
+.project-link:hover { text-shadow: var(--glow-cyan); }
+.coffee-section {
+  margin: 0 2rem 3rem; max-width: 860px; margin-left: auto; margin-right: auto;
+  border: 1px solid rgba(255,230,0,0.2); background: rgba(255,230,0,0.02);
+  padding: 2rem; display: flex; align-items: center; justify-content: space-between;
+  gap: 2rem; flex-wrap: wrap; position: relative; overflow: hidden;
+}
+.coffee-section::before {
+  content: '☕'; position: absolute; right: -10px; top: 50%; transform: translateY(-50%);
+  font-size: 120px; opacity: 0.04; pointer-events: none;
+}
+.coffee-text h3 { font-family: 'Orbitron', monospace; font-size: 13px; font-weight: 700; color: var(--yellow); letter-spacing: 2px; margin-bottom: 6px; text-shadow: var(--glow-yellow); }
+.coffee-text p { font-size: 14px; font-weight: 300; color: rgba(200,216,224,0.6); line-height: 1.6; max-width: 420px; }
+.contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.contact-item { border: 1px solid rgba(0,255,229,0.1); padding: 16px; display: flex; align-items: center; gap: 12px; transition: all 0.3s; cursor: pointer; }
+.contact-item:hover { border-color: rgba(0,255,229,0.4); background: rgba(0,255,229,0.04); }
+.contact-icon { font-size: 20px; width: 36px; text-align: center; }
+.contact-label { font-family: 'Share Tech Mono', monospace; font-size: 10px; color: rgba(200,216,224,0.4); letter-spacing: 1px; margin-bottom: 3px; }
+.contact-value { font-size: 13px; color: var(--cyan); font-weight: 600; }
+footer { border-top: 1px solid rgba(0,255,229,0.08); padding: 1.5rem 2rem; text-align: center; }
+.footer-text { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: rgba(200,216,224,0.25); letter-spacing: 1px; }
+.footer-text span { color: var(--pink); }
+@keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="scanline"></div>
+<div class="content">
+  <nav>
+    <div class="nav-logo">KARMA<span>.</span>DEV</div>
+    <ul class="nav-links">
+      <li><a href="#skills">_skills</a></li>
+      <li><a href="#work">_work</a></li>
+      <li><a href="#contact">_contact</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-tag">// AVAILABLE FOR HIRE <span class="blink">█</span></div>
+    <h1>HEY, I'M<span class="name">KARMA<span class="dot">.</span></span></h1>
+    <div class="hero-sub">&gt; WEB DEV · ROBLOX · LUA SCRIPTER</div>
+    <p class="hero-desc">I build clean websites for businesses and create Roblox games and animations. Fast delivery. Fair prices. Real results.</p>
+    <div class="hero-btns">
+      <a href="#work" class="btn-cyber">VIEW WORK</a>
+      <a href="#contact" class="btn-cyber pink">HIRE ME</a>
+      <a href="https://buymeacoffee.com/YOUR_USERNAME" target="_blank" class="btn-cyber yellow">☕ BUY ME A COFFEE</a>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="section-header"><h2>// SKILLS</h2></div>
+    <div class="skills-grid">
+      <div class="skill-card"><div class="skill-name">HTML / CSS</div><div class="skill-bar-bg"><div class="skill-bar" style="width:85%"></div></div><div class="skill-level">PROFICIENT</div></div>
+      <div class="skill-card"><div class="skill-name">JAVASCRIPT</div><div class="skill-bar-bg"><div class="skill-bar" style="width:70%"></div></div><div class="skill-level">INTERMEDIATE</div></div>
+      <div class="skill-card"><div class="skill-name">REACT</div><div class="skill-bar-bg"><div class="skill-bar" style="width:60%"></div></div><div class="skill-level">LEARNING</div></div>
+      <div class="skill-card"><div class="skill-name">LUA</div><div class="skill-bar-bg"><div class="skill-bar" style="width:75%"></div></div><div class="skill-level">PROFICIENT</div></div>
+      <div class="skill-card"><div class="skill-name">ROBLOX DEV</div><div class="skill-bar-bg"><div class="skill-bar" style="width:80%"></div></div><div class="skill-level">PROFICIENT</div></div>
+      <div class="skill-card"><div class="skill-name">ANIMATION</div><div class="skill-bar-bg"><div class="skill-bar" style="width:78%"></div></div><div class="skill-level">PROFICIENT</div></div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="section-header"><h2>// PROJECTS</h2></div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-tag">&gt; WEB DEV</div>
+        <div class="project-name">ZAFRANI RESTAURANT</div>
+        <div class="project-desc">A clean, modern restaurant website with menu, hero section, and contact info. Built with HTML & CSS.</div>
+        <a href="YOUR_GITHUB_PAGES_LINK_HERE" target="_blank" class="project-link">VIEW LIVE →</a>
+      </div>
+      <div class="project-card">
+        <div class="project-tag">&gt; COMING SOON</div>
+        <div class="project-name">YOUR PROJECT HERE</div>
+        <div class="project-desc">Got a business? I'll build your site. Fast turnaround, affordable rates, clean results.</div>
+        <a href="#contact" class="project-link">HIRE ME →</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="coffee-section">
+    <div class="coffee-text">
+      <h3>// BUY ME A COFFEE</h3>
+      <p>If my work helped you or you just want to support a young dev building their path — even ₹100 means a lot. Thank you. 🙏</p>
+    </div>
+    <a href="https://buymeacoffee.com/YOUR_USERNAME" target="_blank" class="btn-cyber yellow">☕ SUPPORT KARMA</a>
+  </div>
+
+  <section class="section" id="contact">
+    <div class="section-header"><h2>// CONTACT</h2></div>
+    <div class="contact-grid">
+      <div class="contact-item"><div class="contact-icon">📧</div><div><div class="contact-label">EMAIL</div><div class="contact-value">your@email.com</div></div></div>
+      <div class="contact-item"><div class="contact-icon">💬</div><div><div class="contact-label">WHATSAPP</div><div class="contact-value">+91 XXXXX XXXXX</div></div></div>
+      <div class="contact-item"><div class="contact-icon">🐙</div><div><div class="contact-label">GITHUB</div><div class="contact-value">github.com/karma</div></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-text">KARMA<span>.DEV</span> · BUILT WITH PASSION · © 2026</div>
+  </footer>
+</div>
+</body>
+</html>
